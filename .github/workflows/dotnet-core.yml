@@ -30,3 +30,19 @@ jobs:
 
     - name: Publish
       run: dotnet publish -c Release -o '${{ github.workspace }}/out'
+      
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: artifact
+        path: ${{ github.workspace }}/out
+      
+    - uses: Azure/pipelines@v1
+      with:
+        # Fullyqualified URL to the Azure DevOps organization along with project name(eg, https://dev.azure.com/organization/project-name or https://server.example.com:8080/tfs/DefaultCollection/project-name)
+        azure-devops-project-url:  'https://dev.azure.com/alexandrecarlos20044/MecanicoApp'
+        # Name of the Azure Pipline to be triggered
+        azure-pipeline-name: 'MecanicoApp-ASP.NET Core-CI'
+        # Paste personal access token of the user as value of secret variable:AZURE_DEVOPS_TOKEN
+        azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
+
