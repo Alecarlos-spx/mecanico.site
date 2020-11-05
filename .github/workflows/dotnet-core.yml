@@ -26,9 +26,12 @@ jobs:
     - name: Publish
       run: dotnet publish -c Release -o '${{ github.workspace }}/out'
       
-    - name: Zip Package
+    - name: Entrar na pasta
       run: 
         cd '${{ github.workspace }}/out'
+    - name: Zip Package    
+      run:
+        zip -r ${{ github.workspace }}/out.zip *
       
         
     - name: Create Release
