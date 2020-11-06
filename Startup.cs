@@ -26,6 +26,7 @@ namespace AutoMecanica
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var statusApp = Configuration.GetValue<string>("StatusApp");
 
             services.AddHttpContextAccessor();
 
@@ -34,9 +35,18 @@ namespace AutoMecanica
                 {
                     options.LoginPath = "/Usuario/Login";
                 });
-            
-            
-            var url = Configuration.GetValue<string>("AuthApi:Autenticacao");
+
+            var url = "";
+
+            if (statusApp == "Producao")
+            {
+                 url = Configuration.GetValue<string>("AuthApi:AutenticacaoProducao");
+            }
+            else
+            {
+                 url = Configuration.GetValue<string>("AuthApi:Autenticacao");
+            }
+
             Uri uri = new Uri(url);
 
 
